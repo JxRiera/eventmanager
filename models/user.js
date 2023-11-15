@@ -5,7 +5,7 @@ const {isEmail} = require('validator');
 //Schema for the new users created (user, organizer)
 const userSchema = new mongoose.Schema({
     email: { type: String, required: [true, 'Please enter an email'], unique: true, lowercase: true, validator: [isEmail, 'Please enter a valid email']},
-    //type: { type: String, required: [true, 'User or Organizer?'], enum: ['user', 'organizer']}, //Not usable yet
+    type: { type: String, required: [true, 'User or Organizer?'], validator: ['user', 'organizer']},
     password: { type: String, required: [true, 'Please enter a password'], minlength: [6, 'Minimum password length is 6 characters']}
 });
 

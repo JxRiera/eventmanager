@@ -11,12 +11,11 @@ router.get('/signup', (req, res) => {
 
 router.post('/signup', async (req, res) => {
     try {
-        const {email, password} = req.body;
-        const user = await User.create({email, password});
+        const {email, type, password} = req.body;
+        const user = await User.create({email, type, password});
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: 3 * 24 * 60 * 60 * 1000})
-        res.stat
-        us(201).json({user: user._id});
+        res.status(201).json({user: user._id});
     }
     catch(ex) {
         console.log(ex);
