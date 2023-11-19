@@ -1,46 +1,11 @@
 <%- include('partials/header') %>
 
-<form action="/signup">
-    <input type="text" name="email" required />
-    <div class="email error"></div>
-    <input type="password" name="password" required />
-    <div class="password error"></div>
-    <!--<button>Sign up</button>-->
-
-    <button onclick="userType='user'">Sign up Usuario (TEST)</button>
-    <button onclick="userType='organizer'">Sign up Organizador (TEST)</button> 
-</form>
-
-<script>
-    const form = document.querySelector('form');
-    let userType;
-    async function user(valor) {
-        userType = valor;
-    }
 
 
-    form.addEventListener('submit', async(e)=>{
         try {
-            e.preventDefault();
-            const email = form.email.value;
-            const type = userType;
-            const password = form.password.value;
-            
-            const res = await fetch('/signup', {
-                method: 'POST',
-                body: JSON.stringify({email, type, password}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-        });
-        const data = await res.json();
-        console.log(data);
-    } catch(ex) {
-        console.error("folloing error occured: ", ex);
-    }
-    });
 
-    
+    });
 </script>
 
 <%- include('partials/footer') %>
+``

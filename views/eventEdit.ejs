@@ -1,0 +1,71 @@
+<%- include('partials/header') %>
+
+<%- include('partials/nav_bar') %>
+
+
+<main class="container">
+    <h2>Edit "<%= data.name %>" Event</h2>
+
+    <form class="d-flex flex-row justify-content-between" method="post">
+        <div class="form-group">
+            <label for="eventName">Name</label>
+            <input type="text" class="form-control" id="eventName" placeholder="<%= data.name %>">
+        </div>
+        <div class="form-group">
+            <label for="eventPrice">Price</label>
+            <input type="text" class="form-control" id="eventPrice" placeholder="<%= data.price %>">
+        </div>
+        <div class="form-group">
+            <label for="eventDescription">Description</label>
+            <textarea rows="3" class="form-control" id="eventDescription" placeholder="<%= data.description %>"></textarea>
+        </div>
+        <input type="submit" value="Edit">
+        <input type="reset" value="reset">
+    </form>
+
+</main>
+
+<script>
+    const form = document.querySelector('form');
+
+    // Get the ID from the URL
+    const currentURL = window.location.pathname;
+    const urlParts = currentURL.split('/');
+    const eventId = urlParts[urlParts.length - 1]; 
+
+
+    form.addEventListener('submit', async(e) => {
+        try{
+            e.preventDefault();
+
+            const inputName = document.getElementById("eventName").value;
+            const inputPrice = document.getElementById("eventPrice").value;
+            const inputDescription = document.getElementById("eventDescription").value;
+
+            const data = {
+                name: inputName,
+                price: inputPrice,
+                description: inputDescription
+            };
+
+            const res = await fetch('/events/edit/' + eventId, {
+                method: 'PUT',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const redirectURL = await res.text();
+
+            if (res.ok) {
+                alert('Event edited successfully');
+            }
+
+            window.location.href = redirectURL; 
+        }catch(e){
+            console.log("Error: ", e);
+        }
+    });
+</script>
+
+<%- include('partials/footer') %>

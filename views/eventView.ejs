@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<%- include('partials/nav_bar') %>
+
+<main class="container">
+    <h2>View Events</h2>
+
+    <table class="table table-bordered">
+        <% data.forEach(item => { %>
+            <tr>
+                <th scope="row"><%= item.name %></th>
+                <th scope="row"><%= item.price %></th>
+                <th scope="row"><%= item.description %></th>
+                <th scope="row"><a role="button" class="btn btn-primary" href="/events/edit/<%= item.id %>">Edit</a></th>
+                <th scope="row"><a role="button" class="btn btn-danger" href="/events/delete/<%= item.id %>">Delete</a></th>
+            </tr>
+        <% }); %>
+    </table>
+</main>
+
+<%- include('partials/footer') %>
+

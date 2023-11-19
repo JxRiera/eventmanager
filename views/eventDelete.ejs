@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+<%- include('partials/nav_bar') %>
+
+<main class="container">
+    <h2>View Events</h2>
+
+    <table class="table table-bordered">
+            <tr>
+                <th scope="row"><%= data.name %></th>
+                <th scope="row"><%= data.price %></th>
+                <th scope="row"><%= data.description %></th>
+            </tr>
+    </table>
+
+    <h1> Are you sure you want to delete this event? </h1>
+    <a role="button" class="btn btn-primary" id="deleteConfirmation">Yes</a>
+    <a role="button" class="btn btn-danger" href="/events/view">No</a>
+</main>
+
+<script>
+    const deleteConfirmationButton = document.getElementById('deleteConfirmation'); 
+
+    // Get the ID from the URL
+    const currentURL = window.location.pathname;
+    const urlParts = currentURL.split('/');
+    const eventId = urlParts[urlParts.length - 1]; 
+   
+
+    deleteConfirmationButton.addEventListener('click', async (e) => {
+        try {
+            const res = await fetch("/events/delete/" + eventId, {
+                method: 'DELETE'
+            });
+    
+            const redirectURL = await res.text();
+
+            if (res.ok) {
+                alert('Event deleted successfully');
+            }
+            
+            window.location.href = redirectURL; 
+        } catch (e) {
+            console.log("Error: ", e);
+        }
+    });
+    
+    </script>
+
+<%- include('partials/footer') %>
